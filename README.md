@@ -66,7 +66,6 @@ This project demonstrates how to build a machine learning (ML) pipeline using **
           HIDDEN_UNITS = [64, 64, 64, 64],
           INPUT_LABEL_COLS = ['label']
          )
-       -- Creates a DNN model in BigQuery ML
        ```
 
 ### 3. **Model Evaluation**
@@ -75,11 +74,16 @@ This project demonstrates how to build a machine learning (ML) pipeline using **
      - **`definitions/assertions/evaluate_model.sqlx`**:
        Evaluates the performance of the trained model on the evaluation dataset. The assertion ensures that the mean absolute error (MAE) is below a specified threshold.
        ```sql
-       config {
-         type: 'assertion'
-       }
-
-       -- Asserts the model's MAE is under 5
+       SELECT
+          *
+       FROM
+          ML.EVALUATE(
+             MODEL ${ref('dnn_reg')}, 
+             (
+                SELECT * FROM ${ref('chicago_taxi_trips_evaluation')}
+             )
+          )
+       WHERE mean_absolute_error > 5
        ```
 
 ### 4. **Model Prediction**
@@ -88,12 +92,22 @@ This project demonstrates how to build a machine learning (ML) pipeline using **
      - **`definitions/models/03_model_prediction/predict.sqlx`**:
        Uses the trained **DNN Regressor** to predict fares on the testing dataset and rounds the predictions for better readability.
        ```sql
-       config {
-         type: 'table',
-         schema: 'df_bqml_chicago_taxi_trips'
-       }
-
-       -- Predicts fare using the trained DNN model
+          SELECT
+             dayofweek,
+             hourofday,
+             trip_distance,
+             trip_miles,
+             trip_seconds,
+             payment_type,
+             company,
+             ROUND(predicted_label, 2) AS predicted_fare
+          FROM
+             ML.PREDICT(
+                MODEL ${ref('dnn_reg')},
+                (
+                   SELECT * FROM ${ref('chicago_taxi_trips_testing')}
+                )
+             )
        ```
 
 ## Workflow and Pipeline

@@ -59,12 +59,13 @@ This project demonstrates how to build a machine learning (ML) pipeline using **
      - **`definitions/models/02_model_training/dnn_reg.sqlx`**:
        Trains a **Deep Neural Network (DNN)** regressor model with the extracted training dataset. The target label is the fare, including tips, tolls, and extras.
        ```sql
-       config {
-         type: 'operations',
-         hasOutput: true,
-         schema: 'df_bqml_chicago_taxi_trips'
-       }
-
+       CREATE OR REPLACE MODEL ${self()}  
+       OPTIONS (
+          MODEL_TYPE = 'DNN_REGRESSOR',
+          ACTIVATION_FN = 'RELU',
+          HIDDEN_UNITS = [64, 64, 64, 64],
+          INPUT_LABEL_COLS = ['label']
+         )
        -- Creates a DNN model in BigQuery ML
        ```
 

@@ -1,6 +1,7 @@
 config {
     type: "table",
-    schema: "df_bqml_chicago_taxi_trips"
+    schema: "df_bqml_chicago_taxi_trips",
+    tags: ['training']
 }
 
 js {

@@ -1,6 +1,5 @@
 config {
-  type: 'assertion',
-  tags: ['prediction']
+  type: 'assertion'
 }
 
 SELECT

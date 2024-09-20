@@ -1,8 +1,7 @@
 config {
   type: 'operations',
   hasOutput: true,
-  schema: 'df_bqml_chicago_taxi_trips',
-  tags: ['training']
+  schema: 'df_bqml_chicago_taxi_trips'
 }
 
 CREATE OR REPLACE MODEL ${self()}  

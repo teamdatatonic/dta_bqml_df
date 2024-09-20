@@ -1,7 +1,6 @@
 config {
     type: "table",
-    schema: "df_bqml_chicago_taxi_trips",
-    tags:['prediction']
+    schema: "df_bqml_chicago_taxi_trips"
 }
 
 js {

@@ -7,7 +7,6 @@ config {
 SELECT
   dayofweek,
   hourofday,
-  trip_distance,
   trip_miles,
   trip_seconds,
   payment_type,

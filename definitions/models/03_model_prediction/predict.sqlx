@@ -1,14 +1,12 @@
 config {
   type: 'table',
   dependencies: ['evaluate_model'],
-  schema: 'df_bqml_chicago_taxi_trips',
-  tags: ['prediction']
+  schema: 'df_bqml_chicago_taxi_trips'
 }
 
 SELECT
   dayofweek,
   hourofday,
-  trip_distance,
   trip_miles,
   trip_seconds,
   payment_type,

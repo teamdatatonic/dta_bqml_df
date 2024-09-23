@@ -1,7 +1,6 @@
 config {
     type: "table",
-    schema: "df_bqml_chicago_taxi_trips",
-    tags: ['prediction']
+    schema: "df_bqml_chicago_taxi_trips"
 }
 
 js {
@@ -10,10 +9,6 @@ js {
         'trip_seconds',
         'fare',
         'trip_start_timestamp',
-        'pickup_longitude',
-        'pickup_latitude',
-        'dropoff_longitude',
-        'dropoff_latitude',
         'payment_type',
         'company'
     ]
@@ -37,9 +32,6 @@ final_table_ext AS (
     SELECT
         CAST(EXTRACT(DAYOFWEEK FROM trip_start_timestamp) AS INT) AS dayofweek,
         CAST(EXTRACT(HOUR FROM trip_start_timestamp) AS INT) AS hourofday,
-        ST_DISTANCE(
-            ST_GEOGPOINT(pickup_longitude, pickup_latitude),
-            ST_GEOGPOINT(dropoff_longitude, dropoff_latitude)) AS trip_distance,
         trip_miles,
         trip_seconds,
         payment_type,

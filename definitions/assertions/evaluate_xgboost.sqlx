@@ -1,0 +1,15 @@
+config {
+  type: 'assertion',
+  schema: 'df_exp_assertions',
+}
+
+SELECT
+  *
+FROM
+  ML.EVALUATE(
+    MODEL ${ref('xgboost_reg')}, 
+    (
+      SELECT * FROM ${ref('chicago_taxi_trips_evaluation')}
+    )
+  )
+WHERE mean_absolute_error > 6
